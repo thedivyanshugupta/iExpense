@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1CD6EB562860680000DB2318 /* PBFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD6EB552860680000DB2318 /* PBFilterView.swift */; };
+		1CD6EB68286340FE00DB2318 /* ExpensesCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD6EB67286340FD00DB2318 /* ExpensesCopy.swift */; };
 		1CE0FE13285C3BF000FC47E7 /* iExpenseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0FE12285C3BF000FC47E7 /* iExpenseApp.swift */; };
 		1CE0FE15285C3BF000FC47E7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0FE14285C3BF000FC47E7 /* ContentView.swift */; };
 		1CE0FE17285C3BF300FC47E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CE0FE16285C3BF300FC47E7 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		1CD6EB552860680000DB2318 /* PBFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBFilterView.swift; sourceTree = "<group>"; };
+		1CD6EB67286340FD00DB2318 /* ExpensesCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesCopy.swift; sourceTree = "<group>"; };
 		1CE0FE0F285C3BF000FC47E7 /* iExpense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iExpense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CE0FE12285C3BF000FC47E7 /* iExpenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iExpenseApp.swift; sourceTree = "<group>"; };
 		1CE0FE14285C3BF000FC47E7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				1CE0FE2428602D6100FC47E7 /* AddView.swift */,
 				1CE0FE202860224F00FC47E7 /* ExpenseItem.swift */,
 				1CE0FE22286022B200FC47E7 /* Expenses.swift */,
+				1CD6EB67286340FD00DB2318 /* ExpensesCopy.swift */,
 				1CE0FE16285C3BF300FC47E7 /* Assets.xcassets */,
 				1CE0FE18285C3BF300FC47E7 /* Preview Content */,
 			);
@@ -150,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CE0FE23286022B200FC47E7 /* Expenses.swift in Sources */,
+				1CD6EB68286340FE00DB2318 /* ExpensesCopy.swift in Sources */,
 				1CE0FE15285C3BF000FC47E7 /* ContentView.swift in Sources */,
 				1CD6EB562860680000DB2318 /* PBFilterView.swift in Sources */,
 				1CE0FE2528602D6100FC47E7 /* AddView.swift in Sources */,

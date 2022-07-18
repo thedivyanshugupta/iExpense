@@ -10,13 +10,18 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject var expenses = Expenses()
-    @State private var showingAddExpense = false
-    @State private var showActionSheet = false
-    @State private var expensesModified = Expenses()
+    @State private var expensesModified: [ExpenseItem] = []
+    @State private var expensesPersonal: [ExpenseItem] = []
+    @State private var expensesBusiness: [ExpenseItem] = []
+    @State private var expensesBoth: [ExpenseItem] = []
 
+    @State private var showingConfirmation = false
+    @State private var addItemInBoth = true
+    @State private var showingAddExpense = false
+    
     var body: some View {
         NavigationView {
-           
+
             List {
                 ForEach(expenses.items) { item in
                     HStack {
@@ -34,68 +39,89 @@ struct ContentView: View {
             .navigationTitle("iExpense")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showActionSheet = true
-                    }, label: {
-                        Text("Type")})
+                    Text("Type")
+                        .onTapGesture {
+                        showingConfirmation = true
+                    }
+                    .confirmationDialog("Filter", isPresented: $showingConfirmation) {
+                        
+                        Button("Personal") {
+                            bothButtonPressed()
+                            personalButtonPressed()
+                        }
+                        Button("Business") {
+                            bothButtonPressed()
+                            businessButtonPressed()
+                        }
+                        Button("Both") {
+                            bothButtonPressed()
+                            expenses.items = expensesBoth
+                        }
+                        Button("Delete all") {
+                            expenses.items.removeAll()
+                            expensesBoth.removeAll()
+                            expensesPersonal.removeAll()
+                            expensesBusiness.removeAll()
+                        }
+                        Button("Cancel", role: .cancel) { }
+                    } message: {
+                        Text("Select the filter")
+                    }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
+                        addItemInBoth = true
                         showingAddExpense = true
                     }, label: {
                             Image(systemName: "plus") })
                 }
-
             }
             .sheet(isPresented: $showingAddExpense) {
-//                AddView(expenses: expenses, expensesPersonal: Expenses(), expensesBusiness: Expenses())
-                AddView(expenses: Expenses())
-
-            }
-            
-            .sheet(isPresented: $showActionSheet) {
-                PBFilterView(expenses: Expenses())
-                if PBFilterView(expenses: Expenses()).type == "Personal" {
-                    
-                }
+                AddView(expenses: expenses)
             }
         }
-
+    }
+    
+    func bothButtonPressed() {
+        if addItemInBoth == true {
+            for item in expenses.items {
+                if item.type == "Business" || item.type == "Personal" {
+                    if expensesBoth.contains(item) {
+                    } else {
+                        expensesBoth.append(item)
+                    }
+                }
+            }
+            expensesModified = expensesBoth
+        }
     }
     
     func personalButtonPressed() {
-        print(expenses)
-        for item in expenses.items {
+        addItemInBoth = false
+        for item in expensesModified {
             if item.type == "Personal" {
-                expensesModified.items.append(item)
+                expensesPersonal.append(item)
             }
         }
-        expenses = expensesModified
-        print(expensesModified)
+        expenses.items = expensesPersonal
+        expensesPersonal = []
+        expensesBusiness = []
     }
     
     func businessButtonPressed() {
-        for item in expenses.items {
+        addItemInBoth = false
+        for item in expensesModified {
             if item.type == "Business" {
-                expensesModified.items.append(item)
+                expensesBusiness.append(item)
             }
         }
-        print(expensesModified)
+        expenses.items = expensesBusiness
+        expensesPersonal = []
+        expensesBusiness = []
     }
-    
-    
-    func bothButtonPressed() {
-        for item in expenses.items {
-            if item.type == "Business" || item.type == "Personal" {
-                expensesModified.items.append(item)
-            }
-        }
-        print(expensesModified)
-    }
-    
+
     func removeItems(at offsets: IndexSet) {
         expenses.items.remove(atOffsets: offsets)
-        print(expenses.items)
     }
 }
 
@@ -104,3 +130,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+

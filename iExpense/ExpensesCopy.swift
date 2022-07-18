@@ -1,13 +1,14 @@
 //
-//  Expenses.swift
+//  ExpensesCopy.swift
 //  iExpense
 //
-//  Created by Roro on 6/20/22.
+//  Created by Roro on 6/22/22.
 //
+
 
 import Foundation
 
-class Expenses: ObservableObject {
+class ExpensesCopy: ObservableObject {
     @Published var items = [ExpenseItem]() {
         didSet {
             let encoder = JSONEncoder()
@@ -21,9 +22,11 @@ class Expenses: ObservableObject {
         if let savedItems = UserDefaults.standard.data(forKey: "Items") {
             if let decodeditems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems) {
             items = decodeditems
+//                print(items)
                 return
             }
         }
         items = []
     }
 }
+
