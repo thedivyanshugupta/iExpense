@@ -11,9 +11,8 @@ struct ContentView: View {
     
     @StateObject var expenses = Expenses()
     @State private var expensesModified: [ExpenseItem] = []
-    @State private var expensesPersonal: [ExpenseItem] = []
-    @State private var expensesBusiness: [ExpenseItem] = []
     @State private var expensesBoth: [ExpenseItem] = []
+    @State private var expensesPersonalBusiness: [ExpenseItem] = []
 
     @State private var showingConfirmation = false
     @State private var addItemInBoth = true
@@ -47,11 +46,11 @@ struct ContentView: View {
                         
                         Button("Personal") {
                             bothButtonPressed()
-                            personalButtonPressed()
+                            personalOrBusinessButtonPressed(expensesFiltered: "Personal")
                         }
                         Button("Business") {
                             bothButtonPressed()
-                            businessButtonPressed()
+                            personalOrBusinessButtonPressed(expensesFiltered: "Business")
                         }
                         Button("Both") {
                             bothButtonPressed()
@@ -59,9 +58,8 @@ struct ContentView: View {
                         }
                         Button("Delete all") {
                             expenses.items.removeAll()
+                            expensesModified.removeAll()
                             expensesBoth.removeAll()
-                            expensesPersonal.removeAll()
-                            expensesBusiness.removeAll()
                         }
                         Button("Cancel", role: .cancel) { }
                     } message: {
@@ -95,33 +93,24 @@ struct ContentView: View {
             expensesModified = expensesBoth
         }
     }
-    
-    func personalButtonPressed() {
+
+    func personalOrBusinessButtonPressed(expensesFiltered: String) {
         addItemInBoth = false
         for item in expensesModified {
-            if item.type == "Personal" {
-                expensesPersonal.append(item)
+            if item.type == expensesFiltered {
+                expensesPersonalBusiness.append(item)
             }
         }
-        expenses.items = expensesPersonal
-        expensesPersonal = []
-        expensesBusiness = []
-    }
-    
-    func businessButtonPressed() {
-        addItemInBoth = false
-        for item in expensesModified {
-            if item.type == "Business" {
-                expensesBusiness.append(item)
-            }
-        }
-        expenses.items = expensesBusiness
-        expensesPersonal = []
-        expensesBusiness = []
+        expenses.items = expensesPersonalBusiness
+        expensesPersonalBusiness = []
     }
 
     func removeItems(at offsets: IndexSet) {
         expenses.items.remove(atOffsets: offsets)
+        expensesBoth.remove(atOffsets: offsets)
+        expensesPersonalBusiness.remove(atOffsets: offsets)
+        expensesModified.remove(atOffsets: offsets)
+        
     }
 }
 
